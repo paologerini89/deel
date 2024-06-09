@@ -1,17 +1,29 @@
-const resUnathorized = (res) => {
-  res.status(401).end();
+const buildResponse = (res, status, message) => {
+  if (!message) {
+    return res.status(status).end();
+  }
+  return res.status(status).json({ message });
 };
 
-const resForbidden = (res) => {
-  res.status(403).end();
+const resUnathorized = (res, message) => {
+  return buildResponse(res, 401, message);
 };
 
-const resNotFound = (res) => {
-  res.status(404).end();
+const resForbidden = (res, message) => {
+  return buildResponse(res, 403, message);
+};
+
+const resNotFound = (res, message) => {
+  return buildResponse(res, 404, message);
+};
+
+const resInternalServerError = (res, message) => {
+  return buildResponse(res, 500, message);
 };
 
 module.exports = {
   resUnathorized,
   resForbidden,
   resNotFound,
+  resInternalServerError,
 };
